@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Ze Champions
 
-## Getting Started
+A **Next.js + TypeScript** app that models mainline Pokémon damage mechanics, including:
 
-First, run the development server:
+- Base stats, EVs, fixed 31 IVs (as per Champions)
+- Level-based stat calculation with nature modifiers
+- A UI for exploring matchups and damage ranges
+
+---
+
+## Tech stack
+
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS (via `create-next-app` template)
+- **Testing**: Vitest
+- **Dev environment**: Devbox
+
+---
+
+## Getting started
+
+### 1. Use Devbox (recommended)
+
+This repo includes a `devbox.json` so you can get a reproducible environment quickly.
+
+Install Devbox by following the instructions on the official site: [`https://www.jetify.com/devbox`](https://www.jetify.com/devbox).
+
+Then, from the project root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+devbox shell
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This drops you into a shell with all required tools available (Node, npm, etc.). Inside that shell, install dependencies and run the dev server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open `http://localhost:3000` in your browser to see the app.
 
-## Learn More
+### 2. Without Devbox
 
-To learn more about Next.js, take a look at the following resources:
+If you don’t want to use Devbox, you can run the project with your own Node environment:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Then visit `http://localhost:3000`.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Key folders:
+
+- `app/` – Next.js routes and layout
+- `src/libs/damage-calculator/`
+  - `helpers/`
+    - `statHelper.ts` – core stat formula (`calculateStat`)
+  - `types/`
+    - `stats.ts` – branded types for IV/EV and stat identifiers
+    - `nature.ts` – nature definitions and their stat modifiers
+- `src/libs/damage-calculator/**/*.test.ts` – unit tests (Vitest)
+- `vitest.config.ts` – Vitest configuration
+- `tsconfig.json` – TypeScript configuration
+- `devbox.json` – Devbox environment definition
+
+---
+
+## Testing
+
+This project uses **Vitest** for unit tests, especially around the damage and stat calculation logic.
+
+From inside the Devbox shell (or your own Node environment):
+
+```bash
+npm run test
+```
+
+---
+
+## Future work
+
+- Add full damage calculation including:
+  - Move power, type effectiveness, STAB
+  - Items, abilities, weather, terrain, and other modifiers
+- Build a polished UI for selecting Pokémon, moves, items, and conditions
+- Add integration tests for key user flows
